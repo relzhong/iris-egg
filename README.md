@@ -19,7 +19,7 @@ require('iris-egg').startCluster({
 
 ```
 
-## Envirorment config
+## Environment config
 ```
 IRIS_EGG_GRAPHQL: open graphql
 IRIS_EGG_APP: open app mode (authenticate by jwt token)
