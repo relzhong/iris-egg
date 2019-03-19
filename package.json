@@ -1,6 +1,6 @@
 {
   "name": "iris-egg",
-  "version": "1.1.0",
+  "version": "1.2.0",
   "description": "iriscv egg framework",
   "dependencies": {
     "atob": "^2.0.3",
@@ -19,8 +19,10 @@
     "joi": "^13.2.0",
     "js-base64": "^2.3.2",
     "js-yaml": "^3.10.0",
+    "js2xmlparser": "^3.0.0",
     "jsonwebtoken": "^8.0.1",
     "moment": "^2.18.1",
+    "moment-timezone": "^0.5.23",
     "mysql2": "^1.4.2",
     "passport-http-bearer": "^1.0.1",
     "passport-jwt": "^4.0.0",
@@ -28,8 +30,10 @@
     "pg": "^7.4.2",
     "ramda": "^0.25.0",
     "restc": "^0.3.2",
+    "strong-soap": "^1.17.0",
     "url-pattern": "^1.0.3",
-    "uuid": "^3.1.0"
+    "uuid": "^3.1.0",
+    "xml2js": "^0.4.19"
   },
   "devDependencies": {
     "autod": "^3.0.1",
