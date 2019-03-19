@@ -1,0 +1,11 @@
+{
+  "name": "egg-repository",
+  "version": "0.0.1",
+  "dependencies": {
+  },
+  "eggPlugin": {
+    "name": "repository",
+    "optionalDependencies": [ "datasource" ],
+    "dependencies": ["sequelize"]
+  }
+}

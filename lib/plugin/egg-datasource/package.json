@@ -1,0 +1,9 @@
+{
+  "name": "egg-datasource",
+  "version": "0.0.1",
+  "dependencies": {
+  },
+  "eggPlugin": {
+    "name": "datasource"
+  }
+}

@@ -1,0 +1,13 @@
+{
+  "name": "egg-passport-bearer",
+  "version": "0.0.1",
+  "dependencies": {
+    "passport-http-bearer": "^1.0.1"
+  },
+  "eggPlugin": {
+    "name": "passportBearer",
+    "dependencies": [
+      "passport"
+    ]
+  }
+}
