@@ -4,9 +4,9 @@ class AppBootHook {
 
   constructor(app) {
     
-    const middleware = [ 'restc', 'access', 'logger', 'notFoundHandler' ];
+    const middleware = [ 'restc', 'logger', 'notFoundHandler' ];
     if (process.env.IRIS_EGG_GATEWAY) {
-      middleware.splice(3, 0, 'routerProxy');
+      middleware.splice(2, 0, 'access', 'routerProxy');
     }
     app.config.appMiddleware.unshift(...middleware);
   
