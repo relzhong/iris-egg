@@ -39,11 +39,11 @@ class AppBootHook {
           if (data.rows instanceof Array) {
             data.rows = data.rows.map(r => {
               if (r.toJSON) { r = r.toJSON(); }
-              return R.omit([ 'created_at', 'updated_at' ], r);
+              return R.omit([ 'created_at', 'updated_at', 'fullPath', 'pathName' ], r);
             });
           }
         } else {
-          data = R.omit([ 'created_at', 'updated_at' ], data);
+          data = R.omit([ 'created_at', 'updated_at', 'fullPath', 'pathName' ], data);
         }
         this.ctx.body = {
           error: 0,
