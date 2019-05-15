@@ -6,28 +6,21 @@ module.exports = () => {
     const ext = path.extname(ctx.url).toLocaleLowerCase();
     const isSkip = skipExt.indexOf(ext) !== -1 && ctx.status < 400;
     const ua = ctx.get('user-agent') || '';
-    if (!isSkip) {
-      if (ctx.request.method !== 'GET' && ctx.user) {
-        ctx.logger.info({ 
-          query: ctx.query, 
-          queries: ctx.queries,
-          params: ctx.params,
-          reqBody: ctx.request.body,
-        });
-      } else {
-        ctx.logger.info(ua);
-      }
-    }
-
     await next();
     const rs = ctx.starttime ? Date.now() - ctx.starttime : 0;
     ctx.set('X-Response-Time', rs);
 
     if (!isSkip) {
-      if (ctx.request.method !== 'GET' && ctx.user) {
+      if (ctx.request.method !== 'GET') {
         ctx.logger.info({ 
+          query: ctx.query, 
+          queries: ctx.queries,
+          params: ctx.params,
+          reqBody: ctx.request.body,
           resBody: ctx.response.body instanceof Buffer ? ctx.response.body.toString() : ctx.response.body, // support proxy
         });
+      } else {
+        ctx.logger.info(ua);
       }
     }
   };

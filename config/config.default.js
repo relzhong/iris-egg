@@ -29,6 +29,16 @@ module.exports = app => {
       if (err.status) {
         ctx.body = { error: err.code, message: err.message };
       }
+      if (ctx.request.method !== 'GET') {
+        ctx.logger.info({
+          query: ctx.query,
+          queries: ctx.queries,
+          params: ctx.params,
+          reqBody: ctx.request.body,
+        });
+      } else {
+        ctx.logger.info(ctx.get('user-agent') || '');
+      }
     },
     accepts() {
       return 'json';
@@ -43,6 +53,10 @@ module.exports = app => {
     expiresIn: 7200,
     refreshTokenExpireTime: 30 * 24 * 60 * 60, // 1 month
   };
+
+  config.logrotator = {
+    maxDays: 0,
+  }
 
   // 覆盖egg自带的配置
   config.bodyParser = {
