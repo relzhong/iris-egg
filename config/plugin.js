@@ -1,5 +1,3 @@
-'use strict';
-
 const path = require('path');
 
 exports.static = false;
@@ -39,21 +37,21 @@ exports.multiCache = {
   package: 'egg-multi-cache',
 };
 
-if (process.env.IRIS_EGG_GATEWAY) { 
+if (process.env.IRIS_EGG_GATEWAY) {
   exports.passportBearer = {
     enable: true,
     path: path.join(__dirname, '../lib/plugin/egg-passport-bearer'),
   };
 }
 
-if (process.env.IRIS_EGG_APP) { 
+if (process.env.IRIS_EGG_APP) {
   exports.passportJWT = {
     enable: true,
     path: path.join(__dirname, '../lib/plugin/egg-passport-jwt'),
   };
 }
 
-if (process.env.IRIS_EGG_GRAPHQL) { 
+if (process.env.IRIS_EGG_GRAPHQL) {
   exports.graphql = {
     enable: true,
     package: 'egg-graphql',

@@ -1,7 +1,7 @@
-'use strict';
 const path = require('path');
 const { UniqueConstraintError } = require('sequelize');
 const datasources = require('./datasources');
+const os = require('os');
 
 module.exports = app => {
   const config = {};
@@ -46,7 +46,7 @@ module.exports = app => {
   };
 
   config.access = {
-    defaultPolicies: `[]`,
+    defaultPolicies: '[]',
   };
 
   config.authorize = {
@@ -56,7 +56,7 @@ module.exports = app => {
 
   config.logrotator = {
     maxDays: 0,
-  }
+  };
 
   // 覆盖egg自带的配置
   config.bodyParser = {
@@ -75,6 +75,26 @@ module.exports = app => {
     extendTypes: {
       text: [ 'text/xml', 'application/xml' ],
     },
+  };
+
+  config.multipart = {
+    mode: 'file',
+    fileSize: '100mb',
+    tmpdir: path.join(os.tmpdir(), 'egg-multipart-tmp', app.name),
+    cleanSchedule: {
+      // run tmpdir clean job on every day 04:30 am
+      // cron style see https://github.com/eggjs/egg-schedule#cron-style-scheduling
+      cron: '0 0 0 * * *',
+    },
+    fileExtensions: [
+      '.txt',
+      '.doc',
+      '.docx',
+      '.xlsx',
+      '.xls',
+      '.pptx',
+      '.ppt',
+    ],
   };
 
   config.customLogger = {

@@ -3,21 +3,21 @@ const R = require('ramda');
 class AppBootHook {
 
   constructor(app) {
-    
+
     const middleware = [ 'restc', 'logger', 'notFoundHandler' ];
     if (process.env.IRIS_EGG_GATEWAY) {
       middleware.splice(2, 0, 'access', 'routerProxy');
     }
     app.config.appMiddleware.unshift(...middleware);
-  
+
     app.logger.info('[Framework Middleware]', '' + app.config.coreMiddleware);
     app.logger.info('[App Middleware]', '' + app.config.appMiddleware);
-  
+
     app.messenger.on('cache-set', async data => {
       const cache = app.cache.get(app.config.cache.defaultClient);
       await cache.set(data.key, data.value, data.option);
     });
-  
+
     app.messenger.on('cache-del', async data => {
       const cache = app.cache.get(app.config.cache.defaultClient);
       await cache.del(data.key);
@@ -119,6 +119,6 @@ class AppBootHook {
       });
     }
   }
-};
+}
 
 module.exports = AppBootHook;

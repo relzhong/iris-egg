@@ -12,8 +12,8 @@ module.exports = () => {
 
     if (!isSkip) {
       if (ctx.request.method !== 'GET') {
-        ctx.logger.info({ 
-          query: ctx.query, 
+        ctx.logger.info({
+          query: ctx.query,
           queries: ctx.queries,
           params: ctx.params,
           reqBody: ctx.request.body,

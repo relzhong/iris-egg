@@ -2,6 +2,8 @@ const urlPattern = require('url-pattern');
 const axios = require('axios');
 const url = require('url');
 const createError = require('http-errors');
+const fs = require('fs');
+const needle = require('needle');
 
 module.exports = (config, app) => {
   const pattern = new urlPattern('/api/:version/:service/*');
@@ -15,15 +17,35 @@ module.exports = (config, app) => {
           headers.Authorization = ctx.headers.authorization;
           headers.jwt = ctx.user.jwt;
         }
-        const res = await axios({
+        const req = {
           method: ctx.method,
           url: url.format(Object.assign(new url.URL(ctx.href), {
             hostname: app.config.servicesInfo[routerInfo.service].hostname,
             port: app.config.servicesInfo[routerInfo.service].port })),
           data: ctx.request.body,
           headers,
-        });
-        ctx.body = res.data;
+        };
+        let res;
+        if (ctx.get('Content-Type') && ctx.get('Content-Type').indexOf('multipart/form-data') > -1) {
+          if (!ctx.request.files || !ctx.request.files[0]) throw createError(400, 'upload fail!', { code: 1001 });
+          req.data = Object.assign({
+            file: {
+              filename: ctx.request.files[0].filename,
+              buffer: fs.readFileSync(ctx.request.files[0].filepath),
+              content_type: 'application/octet-stream',
+            },
+          }, ctx.request.body);
+          res = await needle('post', req.url, req.data, { multipart: true, headers: req.headers });
+          if (res.statusCode !== 200) {
+            const err = new Error();
+            err.response = { status: res.statusCode, data: res.body };
+            throw err;
+          }
+          ctx.body = res.body;
+        } else {
+          res = await axios(req);
+          ctx.body = res.data;
+        }
         await next();
       } catch (e) {
         if (e.response) {
