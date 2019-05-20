@@ -1,7 +1,7 @@
 const axios = require('axios');
 
 module.exports = app => {
-  const gatewayAddress = `http://${app.config.servicesInfo.gateway.host}:${app.config.servicesInfo.gateway.port}/`;
+  const gatewayAddress = `http://${app.config.servicesInfo.gateway.hostname}:${app.config.servicesInfo.gateway.port}/`;
   class gatewayProxy extends app.Service {
     async setCache(key, value) {
       try {
