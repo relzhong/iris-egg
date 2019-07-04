@@ -1,6 +1,6 @@
 {
   "name": "iris-egg",
-  "version": "1.8.4",
+  "version": "1.8.5",
   "description": "iriscv egg framework",
   "dependencies": {
     "atob": "^2.0.3",
