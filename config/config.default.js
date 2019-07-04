@@ -15,15 +15,15 @@ module.exports = app => {
       }
       if (!err.status) err.status = 500;
       if (err.status && !err.code) {
-        if (ctx.app.config.env === 'prod') {
-          // 生产环境时错误的详细错误内容不返回给客户端，因为可能包含敏感信息
-          ctx.body.message = ctx.app.config.dicts.errorCode[ctx.body.error];
-        }
         switch (err.status) {
           case 400: err.code = 1001; break;
           case 401: err.code = 1002; break;
           case 500: err.code = 1000; break;
-          default: break;
+          default: err.code = 1000; break;
+        }
+        if (ctx.app.config.env === 'prod') {
+          // 生产环境时错误的详细错误内容不返回给客户端，因为可能包含敏感信息
+          ctx.body.message = ctx.app.config.dicts.errorCode[err.code];
         }
       }
       if (err.status) {
