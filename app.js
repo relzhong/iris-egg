@@ -32,7 +32,7 @@ class AppBootHook {
        * @param {string} data 返回数据
        */
       success(data) {
-        const cleanParam = R.ifElse(R.is(Object), R.omit([ 'created_at', 'updated_at', 'fullPath', 'pathName' ], r => r));
+        const cleanParam = R.ifElse(R.is(Object), R.omit([ 'created_at', 'updated_at', 'fullPath', 'pathName' ]), r => r);
         if (data && data.toJSON) { // a sequelize instance
           data = data.toJSON();
         }
