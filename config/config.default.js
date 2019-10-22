@@ -13,7 +13,6 @@ module.exports = app => {
       if (err instanceof UniqueConstraintError) {
         err.status = 403; err.code = 1009;
       }
-      if (!err.status) err.status = 500;
       if (!err.code) {
         switch (err.status) {
           case 400: err.code = 1001; break;
@@ -23,7 +22,7 @@ module.exports = app => {
         }
       }
       ctx.body = { error: err.code, message: err.message };
-      if (ctx.app.config.env === 'prod') {
+      if (ctx.app.config.env === 'prod' && err.status >= 500) {
         // 生产环境时错误的详细错误内容不返回给客户端，因为可能包含敏感信息
         ctx.body.message = ctx.app.config.dicts.errorCode[err.code];
       }
@@ -244,6 +243,12 @@ module.exports = app => {
   if (process.env.DOMAIN_WHITE_LIST) {
     config.security = {
       domainWhiteList: process.env.DOMAIN_WHITE_LIST.split(','),
+      csrf: {
+        enable: false, // use in memory jwt header to do authenticate
+      },
+    };
+  } else {
+    config.security = {
       csrf: {
         enable: false,
       },

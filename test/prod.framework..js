@@ -1,8 +1,10 @@
 const mock = require('egg-mock');
 
-describe('framework', () => {
+describe('framework: no DOMAIN_WHITE_LIST', () => {
   let app;
   before(() => {
+    mock(process.env, 'DOMAIN_WHITE_LIST', '');
+    mock(process.env, 'EGG_SERVER_ENV', 'prod');
     app = mock.app({
       baseDir: 'base',
       framework: true,
@@ -30,7 +32,5 @@ describe('framework', () => {
     await app.httpRequest().get('/error/404').expect(404);
     await app.httpRequest().get('/error/500').expect(500);
     await app.httpRequest().post('/error/500').expect(500);
-    await app.httpRequest().get('/error/500ua').expect(500);
   });
 });
-

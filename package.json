@@ -1,8 +1,9 @@
 {
   "name": "iris-egg",
-  "version": "1.8.5",
+  "version": "2.0.0",
   "description": "iriscv egg framework",
   "dependencies": {
+    "@hapi/joi": "^15.1.1",
     "atob": "^2.0.3",
     "axios": "^0.18.0",
     "bcrypt": "^2.0.1",
@@ -17,8 +18,7 @@
     "egg-graphql": "^2.3.0",
     "egg-multi-cache": "^1.1.0",
     "egg-passport": "^2.0.1",
-    "egg-sequelize": "^4.3.1",
-    "joi": "^13.2.0",
+    "egg-sequelize": "^5.2.0",
     "js-base64": "^2.3.2",
     "js-yaml": "^3.10.0",
     "js2xmlparser": "^3.0.0",
@@ -45,6 +45,7 @@
     "egg-bin": "^4.4.0",
     "egg-ci": "^1.8.0",
     "egg-mock": "^3.14.0",
+    "env-cmd": "^10.0.1",
     "eslint": "^4.18.0",
     "eslint-config-egg": "^7.0.0",
     "eslint-plugin-html": "^5.0.5",
@@ -55,8 +56,8 @@
   },
   "scripts": {
     "test": "npm run lint -- --fix && egg-bin pkgfiles && npm run test-local",
-    "test-local": "egg-bin test",
-    "cov": "egg-bin cov",
+    "test-local": "env-cmd egg-bin test",
+    "cov": "env-cmd egg-bin cov",
     "lint": "eslint .",
     "ci": "npm run lint && egg-bin pkgfiles --check && npm run cov",
     "autod": "autod",
@@ -75,11 +76,11 @@
   ],
   "author": "relzhong",
   "files": [
+    "index.js",
+    "lib",
     "app",
     "config",
-    "lib",
-    "app.js",
-    "index.js"
+    "app.js"
   ],
   "eslintIgnore": [
     "coverage",

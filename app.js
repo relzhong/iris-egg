@@ -32,6 +32,7 @@ class AppBootHook {
        * @param {string} data 返回数据
        */
       success(data) {
+        const cleanParam = R.ifElse(R.is(Object), R.omit([ 'created_at', 'updated_at', 'fullPath', 'pathName' ], r => r));
         if (data && data.toJSON) { // a sequelize instance
           data = data.toJSON();
         }
@@ -39,11 +40,13 @@ class AppBootHook {
           if (data.rows instanceof Array) {
             data.rows = data.rows.map(r => {
               if (r.toJSON) { r = r.toJSON(); }
-              return R.omit([ 'created_at', 'updated_at', 'fullPath', 'pathName' ], r);
+              return cleanParam(r);
             });
           }
         } else {
-          data = R.omit([ 'created_at', 'updated_at', 'fullPath', 'pathName' ], data);
+          if (data instanceof Object) {
+            data = cleanParam(data);
+          }
         }
         this.ctx.body = {
           error: 0,
